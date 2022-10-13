@@ -1,0 +1,3 @@
+dLong := t == timestamp(2021, 1, 2, 6, 0, 0) ? low - step : dLong
+
+dShort := t == timestamp(2021, 1, 1, 8, 0, 0) ? high + step : dShort

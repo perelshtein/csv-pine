@@ -1,0 +1,28 @@
+//@version=5
+// загрузка внешних данных в TradingView
+strategy("Initialize External Data", overlay = true, process_orders_on_close=true)
+
+// список дат (сделок) в хронологич порядке
+// лимит строк - около 1000
+// взято здесь - https://www.pinecoders.com/faq_and_code
+float dShort = na
+float dLong = na
+t = timestamp(year, month, dayofmonth, hour, 0, 0)
+step = ta.atr(1) * 0.25
+
+//ниже нужно добавить список сделок из конвертера
+
+//пример:
+dLong := t == timestamp(2022, 10, 12, 6, 0, 0) ? low - step : dLong
+
+dShort := t == timestamp(2022, 10, 11, 8, 0, 0) ? high + step : dShort
+
+//отрисовка сделок
+plot(dShort, "d", color.yellow, 4, plot.style_circles)
+plot(dLong, "l", color.white, 4, plot.style_circles)
+
+//открытие и закрытие сделок
+if dShort
+    strategy.entry("Enter Short", strategy.short)
+else if dLong
+    strategy.entry("Enter Long", strategy.long)
